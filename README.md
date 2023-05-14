@@ -1,23 +1,37 @@
-# githubrator
-Neck massager which uses Github contributions as vibration pattern.
+# 🚀 Welcome to GitHubrator - Your Code to Comfort Solution! 🚀
 
-## Purpose
+Hey there, fellow devs! 👋 Ready to transform your hustle into the ultimate relaxation for your loved ones? We proudly present *GitHubrator*, the next-gen solution that couples your GitHub contributions with a soothing neck massage experience. Sounds crazy, right? Brace yourselves, because we're about to redefine productivity and wellness! 🎉
 
-When you are working as a developer, your significant other might have a stiff neck. This is because you are not massaging your partner's neck enough. This project is to solve this problem. When your are working harder and contributing to Github you wont have time to massage your partner's neck. And when you don't contribute to Github, you will have time to massage your partner's neck. This project will help you to maintain the balance between your Github contributions and your partner's neck massage.
+## 💡 Our Vision
 
-## How it works
+As developers, we understand that the code is our universe. But we also acknowledge the importance of maintaining harmony in our personal lives. When we're deep in the code, our partners might be yearning for a comforting neck massage. So, why not automate the comfort while we automate the world?
 
-This project uses Github API to get your contributions. And it uses a vibration motor to massage your partner's neck. The vibration pattern is based on your Github contributions. The more you contribute to Github, the more your partner's neck will be massaged.
+GitHubrator is our answer to this modern-day conundrum! It's a revolutionary gadget that reflects your love and care when you're busy solving complex algorithms and pushing those vital commits. 
 
-## How to use
-1. TODO
+## 🧩 How Does It Work?
 
-## How to contribute
-1. TODO
+GitHubrator works in a simple yet effective way. It harnesses the power of the GitHub API to track your contributions. Each commit, pull request, or merge you make triggers a vibrational pattern on a neck massager. The more you contribute, the more intense the massage, offering a perfect blend of your hard work and your partner's comfort. 
 
+🚀 More Code ➡️ Better Massage ➡️ Happy Partner 🚀
 
-## Future improvements
+## 🏁 Getting Started
 
-- [ ] Instead of parsing svg, use the graphQL API to get the contributions. It was my first approach but I couldn't figure out why the query which was working well on explorer didn't work on my code. I will try again later.
-- [ ] Add a button to start/stop the vibration.
-- [ ] Ability to search and pick your favourite contributors.
+Wondering how to harness this magic? Stay tuned for the details! We're just as excited as you are to launch this!
+
+## 🤝 How to Contribute 
+
+Want to be a part of this revolution? Awesome! We'd love to have you on board! Hold tight for the contribution guidelines!
+
+## 🔮 Future Improvements
+
+We've got big plans for GitHubrator! Here's a sneak peek of what's coming up:
+
+- [ ] Ditching SVG parsing and switching to GraphQL API for fetching contributions. Our first approach faced a minor hiccup, but we're all set to try again!
+- [ ] Incorporating a start/stop button for the massage. Because who doesn't like a little control?
+- [ ] Enabling a feature to search and pick your favorite contributors. We believe in spreading the love!
+
+## 🙌 Wrapping Up
+
+So, folks, are you ready to bring the magic of GitHubrator into your lives? Let's code, commit, and comfort! Remember, behind every successful developer, there's a relaxed partner! 
+
+Stay tuned, stay relaxed, and keep coding! GitHubrator is here to change the game! 🚀💖
