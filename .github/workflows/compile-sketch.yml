@@ -1,0 +1,38 @@
+name: Compile Sketch
+
+on:
+  - push
+  - pull_request
+
+jobs:
+  compile-esp32:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup arduino-cli
+        uses: arduino/setup-arduino-cli@v1
+
+      - name: Add ESP32 board manager URL
+        run: |
+          arduino-cli config init
+          echo "board_manager:" >> ~/.arduino15/arduino-cli.yaml
+          echo "  additional_urls: [https://dl.espressif.com/dl/package_esp32_index.json]" >> ~/.arduino15/arduino-cli.yaml
+
+      - name: Update board index
+        run: |
+          arduino-cli core update-index
+          arduino-cli core install esp32:esp32
+
+      - name: Install external libraries
+        run: |
+          arduino-cli lib install "WiFi"
+          arduino-cli lib install "HTTPClient"
+          
+      - name: Compile ESP32 sketch
+        uses: arduino/compile-sketches@v1
+        with:
+          sketch-paths: githubrator/
+          fqbn: esp32:esp32:esp32
