@@ -12,6 +12,8 @@ struct Contribution {
 
 // PWM
 const int motorPin = 12;
+const int channel = 0;
+const int resolution = 8;
 
 // Time between vibrations (in milliseconds)
 const int vibrationInterval = 50;
@@ -36,7 +38,10 @@ void setup() {
     Serial.println("Connecting to WiFi...");
   }
   Serial.println("Connected to WiFi");
-  pinMode(motorPin, OUTPUT);
+  
+  ledcSetup(channel, 5000, resolution);
+  ledcAttachPin(motorPin, channel);
+  
   performSvgRequest();
 }
 
@@ -119,8 +124,8 @@ int mapContributionToMotorIntensity(int contribution, int minIntensity, int cap)
 void vibrateMotor(int intensity, int interval, int duration) {
   Serial.print("Vibration intensity: ");
   Serial.println(intensity);
-  analogWrite(motorPin, intensity);
+  ledcWrite(channel, intensity);
   delay(duration);
-  analogWrite(motorPin, 0);
+  ledcWrite(channel, 0);
   delay(interval);
 }
