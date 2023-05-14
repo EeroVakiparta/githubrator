@@ -1,9 +1,7 @@
 #include <WiFi.h>
 #include <HTTPClient.h>
 #include <algorithm>
-
-const char* ssid = "SSID";
-const char* password = "salasana";
+#include <WiFiManager.h>
 
 struct Contribution {
   int score;
@@ -34,14 +32,19 @@ std::vector<Contribution> contributions;  // Global variable to hold contributio
 std::vector<Contribution> parseSvgResponse(String svgResponse);
 
 void setup() {
+  WiFi.mode(WIFI_STA);
   Serial.begin(115200);
-  WiFi.begin(ssid, password);
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(1000);
-    Serial.println("Connecting to WiFi...");
+
+  WiFiManager wm;
+  wm.resetSettings();
+  bool res;
+  res = wm.autoConnect("GitHubrator");
+
+  if(!res){
+    Serial.println("Failed to conect");
+  }else{
+    Serial.println("Connected...");
   }
-  Serial.println("Connected to WiFi");
-  
   ledcSetup(channel, 5000, resolution);
   ledcAttachPin(motorPin, channel);
   
