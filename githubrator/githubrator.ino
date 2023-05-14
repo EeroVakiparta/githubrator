@@ -10,9 +10,17 @@ struct Contribution {
   String date;
 };
 
+// PWM
 const int motorPin = 12;
+
+// Time between vibrations (in milliseconds)
 const int vibrationInterval = 50;
+
+// Minimum intensity for the motor
+// To make sure the motor is always vibrating a bit, the minimum intensity should be
 const int minimumIntensity = 120;
+
+// Duration of vibration (in milliseconds)
 const int vibrationDuration = 500;
 // TODO: figure out a good cap, search average daily contributions for a year?
 // Or introduce new vibration patterns like pulse and wave when reaching higher daily contributions.
@@ -36,6 +44,7 @@ void loop() {}
 
 void performSvgRequest() {
   HTTPClient http;
+  //TODO: change to your own username
   String url = "https://ghchart.rshah.org/EeroVakiparta";
   http.begin(url);
   int httpResponseCode = http.GET();
@@ -63,31 +72,45 @@ void performSvgRequest() {
 
 std::vector<Contribution> parseSvgResponse(String svgResponse) {
   std::vector<Contribution> contributions;
+
+  Serial.println("Parsing SVG Response:");
+
   int startIndex = svgResponse.indexOf("data-score=\"");
   while (startIndex != -1) {
     int endIndex = svgResponse.indexOf("\"", startIndex + 12);
     if (endIndex != -1) {
       String scoreStr = svgResponse.substring(startIndex + 12, endIndex);
       int score = scoreStr.toInt();
+
+      Serial.print("Score: ");
+      Serial.println(score);
+
       startIndex = svgResponse.indexOf("data-date=\"", endIndex);
       endIndex = svgResponse.indexOf("\"", startIndex + 11);
       if (endIndex != -1) {
         String date = svgResponse.substring(startIndex + 11, endIndex);
+
+        Serial.print("Date: ");
+        Serial.println(date);
+
         contributions.push_back({score, date});
       }
     }
     startIndex = svgResponse.indexOf("data-score=\"", endIndex);
   }
-  std::sort(contributions.begin(), contributions.end(),
+
+  // Sort contributions by date
+   std::sort(contributions.begin(), contributions.end(),
             [](const Contribution& a, const Contribution& b) {
                 return a.date < b.date;
             });
+
   return contributions;
 }
 
 int mapContributionToMotorIntensity(int contribution, int minIntensity, int cap) {
   if (contribution >= cap) {
-    return 255;
+    return 255;  // Maximum intensity for contributions at or above the cap
   } else {
     return map(contribution, 1, cap, minIntensity, 255);
   }
