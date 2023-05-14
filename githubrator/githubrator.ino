@@ -24,9 +24,12 @@ const int minimumIntensity = 120;
 
 // Duration of vibration (in milliseconds)
 const int vibrationDuration = 500;
+
 // TODO: figure out a good cap, search average daily contributions for a year?
 // Or introduce new vibration patterns like pulse and wave when reaching higher daily contributions.
-const int contributionCap = 10; 
+const int contributionCap = 4; 
+
+std::vector<Contribution> contributions;  // Global variable to hold contributions
 
 std::vector<Contribution> parseSvgResponse(String svgResponse);
 
@@ -45,28 +48,30 @@ void setup() {
   performSvgRequest();
 }
 
-void loop() {}
+void loop() {
+  // Cycle through contributions continuously
+  for (const auto& contribution : contributions) {
+    int intensity = mapContributionToMotorIntensity(contribution.score, minimumIntensity, contributionCap);
+    vibrateMotor(intensity, vibrationInterval, vibrationDuration);
+  }
+}
 
 void performSvgRequest() {
   HTTPClient http;
   //TODO: change to your own username
-  String url = "https://ghchart.rshah.org/EeroVakiparta";
+  String url = "https://ghchart.rshah.org/torvalds";
   http.begin(url);
   int httpResponseCode = http.GET();
   if (httpResponseCode == 200) {
     String response = http.getString();
     Serial.println("Received SVG response:");
-    std::vector<Contribution> contributions = parseSvgResponse(response);
+    contributions = parseSvgResponse(response);  // Store contributions in global variable
     Serial.println("Parsed Contribution Data:");
     for (const auto& contribution : contributions) {
       Serial.print("Contribution Score: ");
       Serial.print(contribution.score);
       Serial.print(", Contribution Date: ");
       Serial.println(contribution.date);
-    }
-    for (const auto& contribution : contributions) {
-      int intensity = mapContributionToMotorIntensity(contribution.score, minimumIntensity, contributionCap);
-      vibrateMotor(intensity, vibrationInterval, vibrationDuration);
     }
   } else {
     Serial.print("Error - HTTP response code: ");

@@ -1,3 +1,5 @@
+![Compile Sketch](https://github.com/EeroVakiparta/githubrator/actions/workflows/compile-sketch.yml/badge.svg)
+
 # 🚀 Welcome to GitHubrator - Your Code to Comfort Solution! 🚀
 
 Hey there, fellow devs! 👋 Ready to transform your hustle into the ultimate relaxation for your loved ones? We proudly present *GitHubrator*, the next-gen solution that couples your GitHub contributions with a soothing neck massage experience. Sounds crazy, right? Brace yourselves, because we're about to redefine productivity and wellness! 🎉
