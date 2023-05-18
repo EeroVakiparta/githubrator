@@ -29,6 +29,7 @@ jobs:
       - name: Install external libraries
         run: |
           arduino-cli lib install "WiFi"
+          arduino-cli lib install "WiFiManager"
           arduino-cli lib install "HTTPClient"
           
       - name: Compile ESP32 sketch

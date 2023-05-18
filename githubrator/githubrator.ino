@@ -13,8 +13,10 @@ const int motorPin = 12;
 const int channel = 0;
 const int resolution = 8;
 
+String username;
+
 // Time between vibrations (in milliseconds)
-const int vibrationInterval = 50;
+const int vibrationInterval = 5;
 
 // Minimum intensity for the motor
 // To make sure the motor is always vibrating a bit, the minimum intensity should be
@@ -36,7 +38,11 @@ void setup() {
   Serial.begin(115200);
 
   WiFiManager wm;
-  wm.resetSettings();
+  
+  //wm.setDebugOutput(false); // comment out during development
+  wm.resetSettings(); // comment out during production
+  WiFiManagerParameter contributorName("contributor","Enter contributor username", "torvalds", 50);
+  wm.addParameter(&contributorName);
   bool res;
   res = wm.autoConnect("GitHubrator");
 
@@ -48,6 +54,8 @@ void setup() {
   ledcSetup(channel, 5000, resolution);
   ledcAttachPin(motorPin, channel);
   
+  username = contributorName.getValue();
+  Serial.println(username);
   performSvgRequest();
 }
 
@@ -62,7 +70,7 @@ void loop() {
 void performSvgRequest() {
   HTTPClient http;
   //TODO: change to your own username
-  String url = "https://ghchart.rshah.org/torvalds";
+  String url = "https://ghchart.rshah.org/" + username;
   http.begin(url);
   int httpResponseCode = http.GET();
   if (httpResponseCode == 200) {
